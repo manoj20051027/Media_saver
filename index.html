@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/icon.png">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>🎥 Video Downloader</h2>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+    <form id="downloadForm" action="/download" method="POST">
+      <input type="text" name="videoURL" placeholder="Paste video link here..." required>
+      <input type="text" name="filename" placeholder="Optional: Rename your file">
+      <select name="quality" required>
+        <option value="144p">144p</option>
+        <option value="240p">240p</option>
+        <option value="360p">360p</option>
+        <option value="480p">480p</option>
+        <option value="720p">720p</option>
+        <option value="1080p">1080p</option>
+        <option value="1440p">1440p</option>
+        <option value="2160p">4K</option>
+      </select>
+      <button id="downloadBtn" type="submit">Download</button>
+      <div id="loading" class="hidden">⬇️ Downloading... Please wait</div>
+    </form>
+    <p class="mobile-tip">📱 Tip: On mobile, long-press the download link if the video opens instead of downloading.</p>
+  </div>
+
+  <script>
+    const btn = document.getElementById("downloadBtn");
+    const loading = document.getElementById("loading");
+
+    document.getElementById("downloadForm").addEventListener("submit", () => {
+      btn.style.backgroundColor = "green";
+      loading.classList.remove("hidden");
+    });
+
+    function getRandomColor() {
+      const r = Math.floor(Math.random() * 156) + 100;
+      const g = Math.floor(Math.random() * 156) + 100;
+      const b = Math.floor(Math.random() * 156) + 100;
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    setInterval(() => {
+      document.body.style.background = getRandomColor();
+    }, 5000);
+  </script>
+</body>
+</html>
